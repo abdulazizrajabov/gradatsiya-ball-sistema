@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const rewardController = require('../controllers/rewardController');
-const authenticateToken = require('../middleware/auth');
+const { authenticate: authenticateToken } = require('../middleware/authMiddleware.js');
 
 // Создание бонуса/штрафа
 router.post('/', authenticateToken, rewardController.createReward);

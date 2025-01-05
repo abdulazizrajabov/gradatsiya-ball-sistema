@@ -1,21 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const studentController = require('../controllers/studentController');
-const authenticateToken = require('../middleware/auth');
+const { authenticate } = require('../middleware/authMiddleware.js'); // Правильный импорт
 
 // Регистрация ученика
-router.post('/', authenticateToken, studentController.createStudent);
+router.post('/', authenticate, studentController.createStudent);
 
 // Получение списка учеников
-router.get('/', authenticateToken, studentController.getAllStudents);
+router.get('/', authenticate, studentController.getAllStudents);
 
 // Получение конкретного ученика
-router.get('/:id', authenticateToken, studentController.getStudentById);
+router.get('/:id', authenticate, studentController.getStudentById);
 
 // Обновление данных ученика
-router.put('/:id', authenticateToken, studentController.updateStudent);
+router.put('/:id', authenticate, studentController.updateStudent);
 
 // Удаление ученика
-router.delete('/:id', authenticateToken, studentController.deleteStudent);
+router.delete('/:id', authenticate, studentController.deleteStudent);
 
 module.exports = router;

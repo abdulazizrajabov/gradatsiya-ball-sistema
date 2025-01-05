@@ -1,19 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const teacherController = require('../controllers/teacherController');
-const authenticateToken = require('../middleware/auth');
+const { authenticate, authorizeRoles } = require('../middleware/authMiddleware.js');
 
 // Регистрация учителя
-router.post('/', authenticateToken, teacherController.createTeacher);
+router.post('/', authenticate, authorizeRoles('admin'), teacherController.createTeacher);
 
 // Получение списка учителей
-router.get('/', authenticateToken, teacherController.getAllTeachers);
+router.get('/', authenticate, authorizeRoles('admin'), teacherController.getAllTeachers);
 
 // Обновление данных учителя
-router.put('/:id', authenticateToken, teacherController.updateTeacher);
+router.put('/:id', authenticate, authorizeRoles('admin'), teacherController.updateTeacher);
 
 // Удаление учителя
-router.delete('/:id', authenticateToken, teacherController.deleteTeacher);
+router.delete('/:id', authenticate, authorizeRoles('admin'), teacherController.deleteTeacher);
 
 // Аутентификация учителя (логин)
 router.post('/login', teacherController.login);

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const storeController = require('../controllers/storeController');
-const authenticateToken = require('../middleware/auth');
+const { authenticate: authenticateToken } = require('../middleware/authMiddleware.js');
 
 // Добавление товара
 router.post('/items', authenticateToken, storeController.addItem);

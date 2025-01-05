@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const historyController = require('../controllers/historyController');
-const authenticateToken = require('../middleware/auth');
+const { authenticate: authenticateToken } = require('../middleware/authMiddleware.js');
 
 // Добавление записи в историю
 router.post('/', authenticateToken, historyController.addHistory);
