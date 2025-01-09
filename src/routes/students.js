@@ -6,6 +6,8 @@ const { authenticate } = require('../middleware/authMiddleware.js'); // Прав
 // Регистрация ученика
 router.post('/', authenticate, studentController.createStudent);
 
+router.post('/reward-add', authenticate, studentController.addReward);
+
 // Получение списка учеников
 router.get('/', authenticate, studentController.getAllStudents);
 

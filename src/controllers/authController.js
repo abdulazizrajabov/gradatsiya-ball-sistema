@@ -13,22 +13,19 @@ const login = async (req, res) => {
         return res.status(400).json({ error: "Telegram ID обязателен." });
     }
 
+    if (!password) {
+        return res.status(400).json({ error: "Пароль обязателен." });
+    }
+
     try {
         const user = await User.findOne({ where: { telegram_id } });
         if (!user) {
             return res.status(404).json({ error: "Пользователь не найден." });
         }
 
-        // Если используется пароль
-        if (user.role !== 'admin' && !user.role !== 'teacher') { // определите, кто требует пароль
-            if (!password) {
-                return res.status(400).json({ error: "Пароль обязателен." });
-            }
-
-            const isMatch = await user.validPassword(password);
-            if (!isMatch) {
-                return res.status(401).json({ error: "Неверный пароль." });
-            }
+        const isMatch = await user.validPassword(password);
+        if (!isMatch) {
+            return res.status(400).json({ error: "Неверный пароль." });
         }
 
         // Создание JWT токена

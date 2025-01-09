@@ -42,10 +42,6 @@ module.exports = (sequelize) => {
         },
         class_id: {
             type: DataTypes.INTEGER,
-            references: {
-                model: 'Classes',
-                key: 'id',
-            },
             allowNull: true, // Только для учеников
         },
         password: {

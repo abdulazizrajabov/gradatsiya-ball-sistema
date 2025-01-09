@@ -240,7 +240,7 @@ bot.hears('Обменять баллы', async (ctx) => {
 
 // Обработка команды "Рейтинг по классу"
 bot.hears('Рейтинг по классу', async (ctx) => {
-    const user = await User.findOne({ where: { telegram_id: ctx.from.id }, include: Class });
+    const user = await User.findOne({ where: { telegram_id: ctx.from.id } });
     if (!user) {
         ctx.reply('Вы не зарегистрированы. Пожалуйста, обратитесь к администратору для регистрации.');
         return;
@@ -251,8 +251,8 @@ bot.hears('Рейтинг по классу', async (ctx) => {
         order: [['total_points', 'DESC']],
         limit: 10,
     });
-
-    let message = `Топ учеников класса ${user.Class.name}:\n`;
+    const studentClass = await Class.findOne({ where: { id: user.class_id } });
+    let message = `Топ учеников класса ${studentClass?.name}:\n`;
     topStudents.forEach((student, index) => {
         message += `${index + 1}. ${student.full_name} - ${student.total_points} баллов\n`;
     });

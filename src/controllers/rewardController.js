@@ -13,7 +13,9 @@ exports.createReward = async (req, res) => {
 
 exports.getAllRewards = async (req, res) => {
     try {
-        const rewards = await Reward.findAll();
+        const {filterType} = req.query;
+
+        const rewards = await Reward.findAll({ where: !!filterType ? { type:filterType } : {} });
         res.json(rewards);
     } catch (error) {
         res.status(500).json({ error: error.message });

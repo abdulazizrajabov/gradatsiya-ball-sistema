@@ -20,10 +20,4 @@ db.Reward = require('./reward')(sequelize, Sequelize);
 db.History = require('./history')(sequelize, Sequelize);
 db.StoreItem = require('./storeItem')(sequelize, Sequelize);
 
-// Определение связей
-db.User.belongsTo(db.Class, { foreignKey: 'class_id' });
-db.History.belongsTo(db.User, { foreignKey: 'student_id' });
-db.History.belongsTo(db.Teacher, { foreignKey: 'teacher_id' });
-db.History.belongsTo(db.Class, { foreignKey: 'class_id' });
-
 module.exports = db;
