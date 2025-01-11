@@ -93,8 +93,8 @@ exports.updateStudent = async (req, res) => {
         const student = await User.findByPk(req.params.id);
         if (!student) return res.status(404).json({ error: 'Student not found' });
 
-        const { telegram_id, full_name, class_id, total_points } = req.body;
-        await student.update({ telegram_id, full_name, class_id, total_points });
+        const { telegram_id, telegram_id2, full_name, class_id, total_points } = req.body;
+        await student.update({ telegram_id, telegram_id2, full_name, class_id, total_points });
         res.json(student);
     } catch (error) {
         res.status(400).json({ error: error.message });
