@@ -60,7 +60,7 @@ exports.addReward = async (req, res) => {
             type: reward.type,
             reason
         });
-        const message = `Вам ${reward.type === 'bonus' ? 'начислено' : 'списано'} ${reward.points} баллов за: ${reason}`;
+        const message = `${reward.type === 'bonus' ? '🌟 Sizga bonus berildi!' : '📌 Sizga shtraf yozildi!'} Miqdiroi: ${reward.points} ball. Sababi: ${reward.name}`;
         await bot.sendMessage(chatId, message);
 
         res.status(200).json({message: "Success"});

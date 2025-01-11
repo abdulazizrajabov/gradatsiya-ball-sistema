@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         teacher_id: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
         },
         reason: {
             type: DataTypes.TEXT,
