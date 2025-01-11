@@ -9,7 +9,7 @@ const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN ,{ polling: false });
 
 exports.createStudent = async (req, res) => {
     try {
-        const { telegram_id, full_name, class_id, role, password } = req.body;
+        const { telegram_id, telegram_id2, full_name, class_id, role, password } = req.body;
         if (!telegram_id || !full_name || !role) {
             return res.status(400).json({ error: 'Telegram id or Full name or Role Not Found' });
         }
@@ -24,7 +24,7 @@ exports.createStudent = async (req, res) => {
             }
         }
 
-        const user = await User.create({ telegram_id, role, full_name, class_id, password });
+        const user = await User.create({ telegram_id, role, full_name, class_id, password, telegram_id2 });
         res.status(201).json(user);
     } catch (error) {
         res.status(400).json({ error: error.message });

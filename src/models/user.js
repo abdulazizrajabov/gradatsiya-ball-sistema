@@ -32,6 +32,11 @@ module.exports = (sequelize) => {
             unique: true,
             allowNull: false,
         },
+        telegram_id2: {
+            type: DataTypes.BIGINT,
+            unique: true,
+            allowNull: true,
+        },
         full_name: {
             type: DataTypes.STRING,
             allowNull: false,

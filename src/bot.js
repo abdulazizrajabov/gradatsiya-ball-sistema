@@ -28,7 +28,14 @@ const studentMenu = Markup.keyboard([
 
 // Команда /start для учеников
 bot.start(async (ctx) => {
-    const user = await User.findOne({ where: { telegram_id: ctx.from.id } });
+    const user = await User.findOne({
+        where: {
+            [db.Sequelize.Op.or]: [
+                { telegram_id: ctx.from.id },
+                { telegram_id2: ctx.from.id }
+            ]
+        }
+    });
     if (user) {
         ctx.reply('😊 Ballarni boshqarish tizimiga xush kelibsiz!', studentMenu);
     } else {
@@ -38,7 +45,14 @@ bot.start(async (ctx) => {
 
 // Обработка команды "Мои баллы"
 bot.hears('🏅 Mening ballarim', async (ctx) => {
-    const user = await User.findOne({ where: { telegram_id: ctx.from.id } });
+    const user = await User.findOne({
+        where: {
+            [db.Sequelize.Op.or]: [
+                { telegram_id: ctx.from.id },
+                { telegram_id2: ctx.from.id }
+            ]
+        }
+    });
     if (!user) {
         ctx.reply('❗ Siz ro\'yxatdan o\'tkazilmagansiz. Iltimos, ro\'yxatdan o\'tish uchun administrator bilan bog\'laning.');
         return;
@@ -48,7 +62,14 @@ bot.hears('🏅 Mening ballarim', async (ctx) => {
 
 // Обработка команды "Обменять баллы" (объединение с /buy)
 bot.hears('🔄 Ballarni almashtirish', async (ctx) => {
-    const user = await User.findOne({ where: { telegram_id: ctx.from.id } });
+    const user = await User.findOne({
+        where: {
+            [db.Sequelize.Op.or]: [
+                { telegram_id: ctx.from.id },
+                { telegram_id2: ctx.from.id }
+            ]
+        }
+    });
     if (!user) {
         ctx.reply('❗ Siz ro\'yxatdan o\'tkazilmagansiz. Iltimos, ro\'yxatdan o\'tish uchun administrator bilan bog\'laning.');
         return;
@@ -73,7 +94,14 @@ bot.action(/buy_(\d+)/, async (ctx) => {
     const itemId = ctx.match[1];
     console.log(`Покупка товара с ID: ${itemId} пользователем с ID: ${ctx.from.id}`);
 
-    const user = await User.findOne({ where: { telegram_id: ctx.from.id } });
+    const user = await User.findOne({
+        where: {
+            [db.Sequelize.Op.or]: [
+                { telegram_id: ctx.from.id },
+                { telegram_id2: ctx.from.id }
+            ]
+        }
+    });
     if (!user) {
         ctx.reply('❗ Siz ro\'yxatdan o\'tkazilmagansiz. Iltimos, ro\'yxatdan o\'tish uchun administrator bilan bog\'laning.');
         ctx.answerCbQuery();
@@ -143,7 +171,14 @@ Sana: ${new Date().toLocaleString()}
 
 // Обработка команды "Рейтинг по классу"
 bot.hears('🏆 Sinf bo\'yicha reyting', async (ctx) => {
-    const user = await User.findOne({ where: { telegram_id: ctx.from.id } });
+    const user = await User.findOne({
+        where: {
+            [db.Sequelize.Op.or]: [
+                { telegram_id: ctx.from.id },
+                { telegram_id2: ctx.from.id }
+            ]
+        }
+    });
     if (!user) {
         ctx.reply('❗ Siz ro\'yxatdan o\'tkazilmagansiz. Iltimos, ro\'yxatdan o\'tish uchun administrator bilan bog\'laning.');
         return;
