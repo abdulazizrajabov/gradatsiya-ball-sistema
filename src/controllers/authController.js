@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 require('dotenv').config();
 
 const login = async (req, res) => {
-    const { telegram_id, telegram_id2, password } = req.body;
+    const { telegram_id, password } = req.body;
 
     if (!telegram_id) {
         return res.status(400).json({ error: "Telegram ID обязателен." });
@@ -22,7 +22,7 @@ const login = async (req, res) => {
             where: {
                 [db.Sequelize.Op.or]: [
                     { telegram_id },
-                    { telegram_id2 }
+                    { telegram_id2: telegram_id }
                 ]
             }
         });
