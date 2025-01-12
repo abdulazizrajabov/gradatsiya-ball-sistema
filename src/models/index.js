@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-const sequelize = new Sequelize(String(process.env.DATABASE_URL), {
+const sequelize = new Sequelize(process.env.DATABASE_URL || 'sqlite:./database.sqlite', {
     dialect: 'sqlite', // Замените на 'mysql' при использовании MySQL
     storage: './database.sqlite',
     logging: false,
