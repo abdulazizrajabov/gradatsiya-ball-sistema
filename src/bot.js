@@ -28,18 +28,24 @@ const studentMenu = Markup.keyboard([
 
 // Команда /start для учеников
 bot.start(async (ctx) => {
-    const user = await User.findOne({
-        where: {
-            [db.Sequelize.Op.or]: [
-                { telegram_id: ctx.from.id },
-                { telegram_id2: ctx.from.id }
-            ]
+    try {
+        console.log(`Получен /start от пользователя ID: ${ctx.from.id}`);
+        const user = await User.findOne({
+            where: {
+                [db.Sequelize.Op.or]: [
+                    { telegram_id: ctx.from.id },
+                    { telegram_id2: ctx.from.id }
+                ]
+            }
+        });
+        if (user) {
+            await ctx.reply('😊 Ballarni boshqarish tizimiga xush kelibsiz!', studentMenu);
+        } else {
+            await ctx.reply('😊 Ballarni boshqarish tizimiga xush kelibsiz! Iltimos, administrator tomonidan qo\'shilishingizni kuting. ⏳');
         }
-    });
-    if (user) {
-        ctx.reply('😊 Ballarni boshqarish tizimiga xush kelibsiz!', studentMenu);
-    } else {
-        ctx.reply('😊 Ballarni boshqarish tizimiga xush kelibsiz! Iltimos, administrator tomonidan qo\'shilishingizni kuting. ⏳');
+    } catch (error) {
+        console.error('Ошибка в обработчике /start:', error);
+        await ctx.reply('⚠️ Произошла ошибка при обработке вашей команды. Пожалуйста, попробуйте позже.');
     }
 });
 

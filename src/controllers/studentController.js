@@ -33,7 +33,7 @@ exports.createStudent = async (req, res) => {
 
 exports.addReward = async (req, res) => {
     try {
-        const { rewardId, userId, reason, chatId } = req.body;
+        const { rewardId, userId, reason } = req.body;
         if (!rewardId || !userId) {
             return res.status(400).json({ error: 'Reward or User Not Found' });
         }
@@ -61,7 +61,10 @@ exports.addReward = async (req, res) => {
             reason
         });
         const message = `${reward.type === 'bonus' ? '🌟 Sizga bonus berildi!' : '📌 Sizga shtraf yozildi!'} Miqdiroi: ${reward.points} ball. Sababi: ${reward.name}`;
-        await bot.sendMessage(chatId, message);
+        await bot.sendMessage(user.telegram_id, message);
+        if (user.telegram_id2 !== null) {
+            await bot.sendMessage(user.telegram_id2, message);
+        }
 
         res.status(200).json({message: "Success"});
     } catch (error) {
